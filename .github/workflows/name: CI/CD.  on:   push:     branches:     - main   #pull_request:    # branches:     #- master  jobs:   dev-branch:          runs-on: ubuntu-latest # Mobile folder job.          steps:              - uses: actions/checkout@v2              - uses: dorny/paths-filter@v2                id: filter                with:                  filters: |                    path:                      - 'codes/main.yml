@@ -1,0 +1,34 @@
+name: CI/CD. 
+on:
+  push:
+    branches:
+    - main
+  #pull_request:
+   # branches:
+    #- master
+
+jobs:
+  dev-branch:
+         runs-on: ubuntu-latest
+# Mobile folder job.
+         steps:
+             - uses: actions/checkout@v2
+             - uses: dorny/paths-filter@v2
+               id: filter
+               with:
+                 filters: |
+                   path:
+                     - 'build/**'
+             - name: Setup Java
+               if: steps.filter.outputs.path == 'true'
+               run: echo "hello-world"
+               
+             - uses: dorny/paths-filter@v2
+               id: filte
+               with:
+                 filte: |
+                   path:
+                    - 'steps/**'
+             - name: chceck
+               if: steps.filte.outputs.steps == 'true'
+               run: echo "hello steps file"
